@@ -71,7 +71,7 @@ VERSION:=$(shell $(TOPDIR)/scripts/genversion.sh)
 LINKER_SCRIPT = ../../arch/riscv/qemu-virt32/qemu-virt32.ld
 
 ### GCC flags configuration: processor tunning ###
-CFLAGS += -march=rv32imafdc -Wall -fpie -ffunction-sections -fdata-sections -DRISCV32
+CFLAGS += -march=rv32imac -mabi=ilp32 -Wall -fpie -ffunction-sections -fdata-sections -DRISCV32
 #MIPZ VZ support
 CFLAGS += -Wno-duplicate-decl-specifier -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast#-Wa, 
 #flointing pointing options

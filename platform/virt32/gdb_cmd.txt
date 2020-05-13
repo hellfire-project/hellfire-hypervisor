@@ -1,5 +1,5 @@
-set arch riscv:rv32
+#set arch riscv:rv32
+file prplHypervisor.elf
 target remote :1234
-#file prplHypervisor.elf
 load prplHypervisor.elf
 set output-radix 16
