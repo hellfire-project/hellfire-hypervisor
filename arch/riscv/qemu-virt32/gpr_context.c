@@ -31,15 +31,15 @@
 /** 
  * @brief Stack pointer defined at baikal.ld linker script. 
  */
-extern long _stack;
+extern uint32_t _stack;
 
 
 void print_stack(){
-	uint64_t i, j;
+	uint32_t i, j;
 
 	printf("\n==========================");
-	for(i=((uint64_t)(&_stack))-GPR_SIZE;  i<((uint64_t)(&_stack)); i+=sizeof(uint64_t)){
-		printf("\n0x%x", *(uint64_t*)i);
+	for(i=((uint32_t)(&_stack))-GPR_SIZE;  i<((uint32_t)(&_stack)); i+=sizeof(uint32_t)){
+		printf("\n0x%x", *(uint32_t*)i);
 	}
 	printf("\n==========================");
 }
@@ -48,10 +48,10 @@ void print_stack(){
  * @brief Copy the GPR from vcpu to the stack. 
  * @param grp_p Pointer to the address where the gpr is saved. 
  */
-void gpr_context_restore(long* gpr_p){
-	uint64_t i, j;
-	for(i=((uint64_t)(&_stack))-GPR_SIZE, j=0; i<((uint64_t)(&_stack)); i+=sizeof(uint64_t), j++){
-		*(uint64_t*)i = gpr_p[j]; 
+void gpr_context_restore(uint32_t* gpr_p){
+	uint32_t i, j;
+	for(i=((uint32_t)(&_stack))-GPR_SIZE, j=0; i<((uint32_t)(&_stack)); i+=sizeof(uint32_t), j++){
+		*(uint32_t*)i = gpr_p[j]; 
 	}
 }
 
@@ -60,10 +60,10 @@ void gpr_context_restore(long* gpr_p){
  * @brief Copy the GPR from stack to the vcpu. 
  * @param grp_p Pointer to the address where gpr will be saved. 
  */
-void gpr_context_save(long* gpr_p){
-	uint64_t i, j;
-	for(i=((uint64_t)(&_stack))-GPR_SIZE, j=0; i<((uint64_t)(&_stack)); i+=sizeof(uint64_t), j++){
-		gpr_p[j] = ((uint64_t)*(uint64_t*)i); 
+void gpr_context_save(uint32_t* gpr_p){
+	uint32_t i, j;
+	for(i=((uint32_t)(&_stack))-GPR_SIZE, j=0; i<((uint32_t)(&_stack)); i+=sizeof(uint32_t), j++){
+		gpr_p[j] = ((uint32_t)*(uint32_t*)i); 
 	}
 }
 
@@ -73,8 +73,8 @@ void gpr_context_save(long* gpr_p){
  * @param reg GPR number.
  * @param value Value to write on the stack.
  */
-void MoveToPreviousGuestGPR(long reg, uint64_t value){
-	uint64_t* sp = (((uint64_t)(&_stack)) - GPR_SIZE);
+void MoveToPreviousGuestGPR(uint32_t reg, uint32_t value){
+	uint32_t* sp = (((uint32_t)(&_stack)) - GPR_SIZE);
 	sp[reg] = value;
 }
 
@@ -84,8 +84,8 @@ void MoveToPreviousGuestGPR(long reg, uint64_t value){
  * @param reg GPR number.
  * @return GPR data.
  */
-uint64_t MoveFromPreviousGuestGPR(long reg){
-	uint64_t* sp = (((uint64_t)(&_stack)) - GPR_SIZE);
+uint32_t MoveFromPreviousGuestGPR(uint32_t reg){
+	uint32_t* sp = (((uint32_t)(&_stack)) - GPR_SIZE);
 	return sp[reg];
 }
 
