@@ -16,7 +16,7 @@ This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCR
 */
 
 
-.equ REGBYTES, 8
+.equ REGBYTES, 4
 
 .macro lxsp a, b
 lw \a, ((\b)*REGBYTES)(sp)
@@ -30,7 +30,7 @@ sw \a, ((\b)*REGBYTES)(sp)
 .align 4
 trap_vector:
     # Save registers.
-    addi    sp, sp, -248
+    addi    sp, sp, -124
     sxsp    ra, 0
     sxsp    sp, 1
     sxsp    gp, 2
@@ -100,7 +100,7 @@ trap_vector:
     lxsp    t4, 28
     lxsp    t5, 29
     lxsp    t6, 30
-    addi sp, sp, 248
+    addi sp, sp, 124
     sret
 
 .section .e_entry

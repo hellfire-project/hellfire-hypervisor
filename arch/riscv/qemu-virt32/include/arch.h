@@ -21,7 +21,7 @@ This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCR
 #define BARE_METAL_ENTRY_POINT 0x80000000
 #define LINUX_ENTRY_POINT 0x80100400
 /* GPR bank size in number of bytes (32 * 8) */
-#define GPR_SIZE 256 
+#define GPR_SIZE 128
 
 #include <qemu_virt.h>
 #include <gpr_context.h>

@@ -1,5 +1,5 @@
 
-.equ REGBYTES, 8
+.equ REGBYTES, 4
 
 .macro lxsp a, b
 lw \a, ((\b)*REGBYTES)(sp)
@@ -23,7 +23,7 @@ trap_vector:
     
     csrw    mscratch, sp
     la      sp, _stack          # set hypervisor stack
-    addi    sp, sp, -256
+    addi    sp, sp, -128
 
     # Save registers.
     sxsp    ra, 1
