@@ -34,8 +34,6 @@ void irq_timer(){
 
 int main() {
 
-	asm volatile ("ecall");
-    
 	interrupt_register(irq_timer, GUEST_TIMER_INT);
 	
 	START_TIMER();
