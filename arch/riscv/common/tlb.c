@@ -50,7 +50,7 @@ void dumpPageTables(){
 
 	for (i=0; i<next_page; i++){
 		printf("Table %d at 0x%x\n", i, (page_Buffer + (i*PAGESIZE)));
-		for (j=0; j<512; j++){
+		for (j=0; j<1024; j++){
 			uint32_64_t v = ((uint32_64_t*)(page_Buffer + (i*PAGESIZE)))[j];
 			if (v != 0){
 				printf("%d, %x\n", j, v);
@@ -105,7 +105,7 @@ void tlbEntryWrite(vm_t* vm, struct tlbentry *entry){
 
 	#else
 	first_va_jump = (first_va&0x3FF000)>>12;
-	last_va_jump = (last_va&0x3FF000)>12;
+	last_va_jump = (last_va&0x3FF000)>>12;
 	#endif
 	
 
@@ -138,7 +138,7 @@ void tlbEntryWrite(vm_t* vm, struct tlbentry *entry){
 	}
 
 	#endif
-	
+		
 }
 
 
