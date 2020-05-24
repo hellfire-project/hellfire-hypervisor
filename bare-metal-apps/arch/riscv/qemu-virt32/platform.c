@@ -88,9 +88,9 @@ void init_proc(){
  * @param ms_delay Time period.
  * @return 0 if the period was not consumed, 1 otherwise.
  */
-uint32_t wait_time(uint64_t old_time, uint64_t ms_delay){
-	uint64_t diff_time;
-	uint64_t now = get_mtimer_value();
+uint32_t wait_time(uint32_t old_time, uint32_t ms_delay){
+	uint32_t diff_time;
+	uint32_t now = get_mtimer_value();
     
 	if (now >= old_time)
 		diff_time = now - old_time;
@@ -106,7 +106,7 @@ uint32_t wait_time(uint64_t old_time, uint64_t ms_delay){
 
 
 void mdelay(uint32_t msec){
- 	uint64_t now = get_mtimer_value();
+ 	uint32_t now = get_mtimer_value();
     
     while(!wait_time(now, msec));       
   

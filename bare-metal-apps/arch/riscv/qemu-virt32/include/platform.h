@@ -42,7 +42,7 @@ typedef void interrupt_handler_t();
 
 uint32_t interrupt_register(interrupt_handler_t *handler, uint32_t interrupt);
 void init_proc();
-uint32_t wait_time(uint64_t old_time, uint64_t ms_delay);
+uint32_t wait_time(uint32_t old_time, uint32_t ms_delay);
 
 void mdelay(uint32_t msec);
 
