@@ -90,7 +90,7 @@ void contextRestore(){
 		config_idle_cpu();
 		return;
 	}
-	
+
 	/* Mark the VCPU as initialized. */
 	if(vcpu_in_execution->init){
 		vcpu_in_execution->init = 0;

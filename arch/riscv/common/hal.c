@@ -282,7 +282,7 @@ void enableIE(){
 
 	write_csr(mstatus, read_csr(mstatus) | 0xa);
 	
-	write_csr(mideleg, read_csr(mideleg) | 0x2);
+	write_csr(mideleg, read_csr(mideleg) | 0x22);
 		
 }
 
