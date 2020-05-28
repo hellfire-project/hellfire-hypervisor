@@ -57,18 +57,17 @@ uint32_t interrupt_register(interrupt_handler_t *handler, uint32_t interrupt){
  */
 void _irq_handler(uint32_t sstatus, uint32_t sepc){
 
-	printf("\n\nsip:%d\n\n",read_csr(sip));
+	if(read_csr(sip)&0x20ULL){
 
-	/*if(read_csr(sip)&0x20ULL){
 
 		if (interrupt_handlers[0]){
-			((interrupt_handler_t*)interrupt_handlers[1])();
+			((interrupt_handler_t*)interrupt_handlers[0])();
 		}
 
-		write_csr(sip,read_csr(sip)^0x2);
+		write_csr(sip,read_csr(sip)&0x20);
 
-	}*/	
-	/*if(read_csr(sip)&0x2ULL){
+	}
+	if(read_csr(sip)&0x2ULL){
 
 		if (interrupt_handlers[1]){
 			((interrupt_handler_t*)interrupt_handlers[1])();
@@ -78,7 +77,7 @@ void _irq_handler(uint32_t sstatus, uint32_t sepc){
 
 	}
 
-	di();*/
+	di();
 	
 }
 
