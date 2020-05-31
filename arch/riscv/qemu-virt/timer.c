@@ -51,19 +51,18 @@ void timer_interrupt_handler(){
 	guest_timer++;
 
 	if(read_csr(mie)&0x20){
-		
-		write_csr(mie,read_csr(mie) ^ 0x20);
+
 		write_csr(mip,read_csr(mip) ^ 0x20);
-		
+		write_csr(mie,read_csr(mie) ^ 0x20);
 
 	}
 
-	if(guest_timer == 1000){
+
+	if(guest_timer == 100){
 
 		guest_timer = 0;
 		write_csr(mie,read_csr(mie)|0x20);
 		write_csr(mip,read_csr(mip)|0x20);
-
 	}
 
 	MTIMECMP = MTIME + SYSTEM_TICK_INTERVAL;
