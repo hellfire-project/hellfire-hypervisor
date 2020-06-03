@@ -48,15 +48,15 @@ void timer_interrupt_handler(){
 	uint64_t static guest_timer = 0;
 	vcpu_t *vcpu = vcpu_in_execution;
 
+	MTIMECMP = MTIME + SYSTEM_TICK_INTERVAL;
+
 	guest_timer++;
-	
+
 	if( guest_timer % 10 == 0){
 
 		write_csr(sie,read_csr(sie)|0x20);
 		write_csr(mip,read_csr(mip)|0x20);
 	}
-
-	MTIMECMP = MTIME + SYSTEM_TICK_INTERVAL;
 
 	run_scheduler();
 
