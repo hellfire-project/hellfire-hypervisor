@@ -347,5 +347,29 @@ static inline long set_field(uint64_t reg, long mask, long val){
 #define REG_T6   31
 
 
+#define PAGESIZE 4096
+#define VIRTUALBASE 0x80000000
+
+#define TIMER_INT 0X20
+
+#if defined (RISCV64)
+
+#define NUM_PAGE_TABLES 512
+#define SND_PTE 0x3FE00000
+#define TRD_PTE 0x1FF000
+
+#define MPP_MASK 0xFFFFFFFFFFFFEFFF
+
+#else
+
+#define NUM_PAGE_TABLES 1024
+#define SND_PTE 0x3FF000
+
+#define MPP_MASK 0xFFFFFFFFFFFFEFFF
+
+#endif
+
+
+
 
 #endif 

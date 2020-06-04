@@ -19,10 +19,6 @@ This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCR
 #include <proc.h>
 #include <hal.h>
 
-
-#define PAGESIZE 4096
-#define VIRTUALBASE 0x80000000
-
 extern uint64_t __pages_start;
 static const uint8_t *page_Buffer = (uint8_t *)&__pages_start;
 
@@ -50,7 +46,7 @@ void dumpPageTables(){
 
 	for (i=0; i<next_page; i++){
 		printf("Table %d at 0x%x\n", i, (page_Buffer + (i*PAGESIZE)));
-		for (j=0; j<1024; j++){
+		for (j=0; j<NUM_PAGE_TABLES; j++){
 			uint32_64_t v = ((uint32_64_t*)(page_Buffer + (i*PAGESIZE)))[j];
 			if (v != 0){
 				printf("%d, %x\n", j, v);
@@ -89,7 +85,7 @@ void tlbEntryWrite(vm_t* vm, struct tlbentry *entry){
 
 	for(i=first_va_jump;i<=(last_va_jump);i++){
 	
-		page_table[i] |= 1;
+		page_table[i] |= PTE_V;
 		page_table[i] |= (((uint32_64_t)inner_page_table + (uint32_64_t)(i-first_va_jump)) >> 12) << 10;
 
 	}
@@ -100,31 +96,31 @@ void tlbEntryWrite(vm_t* vm, struct tlbentry *entry){
 	#if defined(RISCV64)
 	inner_page_table = get_next_page();
 
-	first_va_jump = (first_va&0x3FE00000)>>21;
-	last_va_jump = (last_va&0x3FE00000)>21;
+	first_va_jump = (first_va&SND_PTE)>>21;
+	last_va_jump = (last_va&SND_PTE)>21;
 
 	#else
-	first_va_jump = (first_va&0x3FF000)>>12;
-	last_va_jump = (last_va&0x3FF000)>>12;
+	first_va_jump = (first_va&SND_PTE)>>12;
+	last_va_jump = (last_va&SND_PTE)>>12;
 	#endif
 	
 
 	#if defined(RISCV64)
 	for(i=first_va_jump;i<=(last_va_jump);i++){
 
-		page_table[i] |= 1;
+		page_table[i] |= PTE_V;
 		page_table[i] |= (((uint32_64_t)inner_page_table + (uint32_64_t)(i-first_va_jump)) >> 12) << 10;
 
 	}
 
 	page_table = inner_page_table;
 
-	first_va_jump = (first_va&0x1FF000)>>12;
-	last_va_jump = (last_va&0x1FF000)>>12;
+	first_va_jump = (first_va&TRD_PTE)>>12;
+	last_va_jump = (last_va&TRD_PTE)>>12;
 	
 	for(i=first_va_jump;i<=(last_va_jump);i++){
 
-		page_table[i] |= 0xf;
+		page_table[i] |= PTE_V | PTE_R | PTE_W | PTE_X;
 		page_table[i] |= (addr + (uint32_64_t)(i-first_va_jump))<< 10;
 
 	}
@@ -132,7 +128,7 @@ void tlbEntryWrite(vm_t* vm, struct tlbentry *entry){
 
 	for(i=first_va_jump;i<=(last_va_jump);i++){
 
-		page_table[i] |= 0xf;
+		page_table[i] |= PTE_V | PTE_R | PTE_W | PTE_X;
 		page_table[i] |= (addr + (uint32_64_t)(i-first_va_jump))<< 10;
 
 	}

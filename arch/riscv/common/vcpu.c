@@ -107,11 +107,11 @@ void contextRestore(){
 	
 	setEPC(vcpu->pc);
 
+	write_csr(mstatus, (read_csr(mstatus) & MPP_MASK));
+
 	#if defined(RISCV64)
-	write_csr(mstatus, (read_csr(mstatus) & 0xFFFFFFFFFFFFEFFF));
 	write_csr(satp, (8ULL<<60) | (((uint64_t)vcpu->vm->id)<<44) | (uint64_t)vcpu->vm->root_page_table >> 12);
 	#else
-	write_csr(mstatus, (read_csr(mstatus) & 0xFFFFEFFF));
 	write_csr(satp, (1<<31) | (((uint32_64_t)vcpu->vm->id)<<22) | (uint32_64_t)vcpu->vm->root_page_table >> 12);
 	#endif
 

@@ -31,6 +31,10 @@ This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCR
 
 #define GET_TIMER()  get_mtimer_value()
 
+#define TIMER_INT 0x20ULL
+
+#define VIRTUAL_INT 0x2ULL
+
 #define read_csr(reg) ({ unsigned long __tmp; \
   asm volatile ("csrr %0, " #reg : "=r"(__tmp)); __tmp; })
 
