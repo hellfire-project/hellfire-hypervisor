@@ -45,17 +45,19 @@ This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCR
  * Perfoms VCPUs scheduling and virtual timer interrupt injection on guests. 
  */
 void timer_interrupt_handler(){
-	uint64_t static guest_timer = 0;
+	uint32_t static guest_timer = 0;
 
 	MTIMECMP = MTIME + SYSTEM_TICK_INTERVAL;
 
-	/*guest_timer++;
+	guest_timer++;
 
-	if( guest_timer % 1000 == 0){
+	if( guest_timer == 1000){
+
+		guest_timer = 0;
 
 		write_csr(sie,read_csr(sie)|0x20);
 		write_csr(mip,read_csr(mip)|0x20);
-	}*/
+	}
 
 	run_scheduler();
 
