@@ -57,17 +57,17 @@ uint32_t interrupt_register(interrupt_handler_t *handler, uint32_t interrupt){
  */
 void _irq_handler(uint32_t sstatus, uint32_t sepc){
 
-	if(read_csr(sip)&TIMER_INT){
 
-
-		if (interrupt_handlers[0]){
-			((interrupt_handler_t*)interrupt_handlers[0])();
+	if(read_csr(sip) & TIMER_INT && read_csr(sie) & TIMER_INT){
+		if (interrupt_handlers[5]){
+			((interrupt_handler_t*)interrupt_handlers[5])();
 		}
 
 		write_csr(sie,read_csr(sie) ^ TIMER_INT);
 
 	}
-	if(read_csr(sip)&VIRTUAL_INT){
+
+	if(read_csr(sip) & VIRTUAL_INT){
 
 		if (interrupt_handlers[1]){
 			((interrupt_handler_t*)interrupt_handlers[1])();
@@ -75,7 +75,6 @@ void _irq_handler(uint32_t sstatus, uint32_t sepc){
 
 		write_csr(sip,read_csr(sip) ^ VIRTUAL_INT);
 	}
-
 			
 }
 
@@ -87,7 +86,6 @@ void _irq_handler(uint32_t sstatus, uint32_t sepc){
 void init_proc(){
 	/* Enable float-point instructions */
 	write_csr(sstatus, read_csr(sstatus) | (1 << 13));
-
 }
 
 

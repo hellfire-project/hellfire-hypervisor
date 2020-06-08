@@ -27,12 +27,11 @@ sd \a, ((\b)*REGBYTES)(sp)
 .endm
     
 
-.align 4
+.align 8
 trap_vector:
     # Save registers.
     addi    sp, sp, -248
-    sxsp    ra, 0
-    sxsp    sp, 1
+    sxsp    ra, 1
     sxsp    gp, 2
     sxsp    fp, 3
     sxsp    tp, 4
@@ -69,8 +68,7 @@ trap_vector:
     jal     _irq_handler
 
     # Restore registers.
-    lxsp    ra, 0
-    lxsp    sp, 1
+    lxsp    ra, 1
     lxsp    gp, 2
     lxsp    fp, 3
     lxsp    tp, 4

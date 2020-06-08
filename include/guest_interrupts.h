@@ -26,7 +26,7 @@ This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCR
 #ifndef __GUEST_INTERRUPTS_H
 #define __GUEST_INTERRUPTS_H
 
-#ifndef BAIKAL_T1
+#ifdef PIC32MZ
 
 #define GUEST_TIMER_INT			1
 #define GUEST_INTERVM_INT		2
