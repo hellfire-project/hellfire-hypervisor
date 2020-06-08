@@ -51,12 +51,11 @@ void timer_interrupt_handler(){
 
 	guest_timer++;
 
-	if( guest_timer == 1000){
-
+	if(guest_timer == 10){
 		guest_timer = 0;
 
-		write_csr(sie,read_csr(sie)|0x20);
-		write_csr(mip,read_csr(mip)|0x20);
+		set_csr_bits(sie, TIMER_INT);
+		set_csr_bits(mip, TIMER_INT);
 	}
 
 	run_scheduler();
