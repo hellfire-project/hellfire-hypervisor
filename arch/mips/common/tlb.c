@@ -100,7 +100,7 @@ uint32_t tlbCreateEntry(uint32_t address, uint32_t baseaddr, uint32_t size, uint
 		entry.coherency = 2;
 	}
     
-	tlbEntryWrite(vm_in_execution, &entry);
+	tlbEntryWrite(NULL, &entry);
     
 	return (address & 0xFFF) + baseaddr - KSEG;
 }
