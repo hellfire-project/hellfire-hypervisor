@@ -1,4 +1,4 @@
-OUTPUT_FORMAT("elf32-tradlittlemips")
+OUTPUT_FORMAT("elf32-littlemips")
 ENTRY(_entry)
 
 MEMORY 

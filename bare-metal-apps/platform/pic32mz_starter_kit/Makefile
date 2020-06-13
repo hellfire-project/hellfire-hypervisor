@@ -68,7 +68,7 @@ CFLAGS += -EL -mtune=m14k -mips32r2 -Wall
 #MIPZ VZ support
 CFLAGS += -Wa,-mvirt
 #flointing pointing options
-CFLAGS +=  -mno-check-zero-division -msoft-float -fshort-double
+CFLAGS +=  -mno-check-zero-division -msoft-float 
 #General options
 CFLAGS += -c -ffreestanding -nostdlib -fomit-frame-pointer -G 0
 #Additional features flags

@@ -18,16 +18,17 @@ CFG_FILE = cfg/sample-blink.cfg
 #CFG_FILE = cfg/sample-3VMs.cfg
 
 # CROSS Compiler 
-CROSS_COMPILER = mips-mti-elf-
+#CROSS_COMPILER = mips-mti-elf-
+CROSS_COMPILER = mips-elf-
 
 # Optional Device Drivers
 CONFIG_INTERVMCOMM_DRV = yes
-CONFIG_PIC32MZ_USB_DRV = yes
-CONFIG_PIC32MZ_ETHERNET_DRV = yes
+#CONFIG_PIC32MZ_USB_DRV = yes
+#CONFIG_PIC32MZ_ETHERNET_DRV = yes
 CONFIG_VIRTUAL_IO_DRV = yes
-CONFIG_INTERRUPT_REDIRECT_DRV = yes
-CONFIG_PIC32MZ_DENIED_HYPERCALLS_DRV = yes
-CONFIG_PIC32MZ_PUF_SRAM_DRV = yes
+#CONFIG_INTERRUPT_REDIRECT_DRV = yes
+#CONFIG_PIC32MZ_DENIED_HYPERCALLS_DRV = yes
+#CONFIG_PIC32MZ_PUF_SRAM_DRV = yes
 
 # The PIC32MZ Ethernet shared driver allows to share the 
 # ethernet device among several VMs. See instruction on the
@@ -46,7 +47,7 @@ CFLAGS += -DCPU_ARCH="Microchip Starter Kit"
 CFLAGS += -DCPU_FREQ=200000000
 
 # Define DEBUG_GUEST to yes if you desire to compile the guests for debug. The code optimization will be O0.
-DEBUG_GUEST = no
+DEBUG_GUEST = yes
 
 
 ########################################################################################################
@@ -70,15 +71,15 @@ VERSION:=$(shell $(TOPDIR)/scripts/genversion.sh)
 LINKER_SCRIPT = ../../arch/mips/pic32mz/pic32mz.ld
 
 ### GCC flags configuration: processor tunning ###
-CFLAGS += -EL -O2 -mips32r5 -mmicromips -Wall
+CFLAGS += -EL -O0 -mips32r5 -Wall
 #MIPZ VZ support
 CFLAGS += -Wa,-mvirt 
 #flointing pointing options
-CFLAGS +=  -mno-check-zero-division -msoft-float -fshort-double
+CFLAGS +=  -mno-check-zero-division -msoft-float 
 #General options
 CFLAGS += -c -ffreestanding -nostdlib -fomit-frame-pointer -G 0
 #Additional features flags
-CFLAGS += -DCPU_SPEED=$(F_CLK) -DHYPVERSION=${VERSION}
+CFLAGS += -DCPU_SPEED=$(F_CLK) -DHYPVERSION=${VERSION} 
 # LD flags
 LDFLAGS = -EL  
 

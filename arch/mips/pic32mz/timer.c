@@ -45,7 +45,7 @@ This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCR
  * 
  * @param interval Time interval to the next interrupt in CPU ticks (CPU_FREQ/2)
  */
-inline void calc_next_timer_interrupt(uint32_t interval){
+void calc_next_timer_interrupt(uint32_t interval){
 	uint32_t count;
 	
 	count = mfc0(CP0_COUNT, 0);

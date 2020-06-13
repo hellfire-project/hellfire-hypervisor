@@ -15,7 +15,7 @@ This code was written by Sergio Johann at Embedded System Group (GSE) at PUCRS/B
 
 */
 
-OUTPUT_FORMAT("elf32-tradlittlemips")
+OUTPUT_FORMAT("elf32-littlemips")
 ENTRY(_entry)
 
 /* specify HF-RISC memory areas */
