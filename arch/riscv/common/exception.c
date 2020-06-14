@@ -76,7 +76,7 @@ void guest_exit_exception(uint32_64_t cause, uint32_64_t mepc){
  * 
  */
 void general_exception_handler(uint32_64_t mcause, uint32_64_t mepc){
-	uint32_t cause = get_field(mcause, MCAUSE_MASK);
+	uint32_t cause = read_csr(mcause) & MCAUSE_MASK;
 
 	/* Interruption */
 	if(MCAUSE_INT & mcause){

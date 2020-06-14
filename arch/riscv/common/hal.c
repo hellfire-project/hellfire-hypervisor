@@ -76,7 +76,7 @@ static int get_asid_sz(){
 	
 	write_csr(satp, SATP_ASID_MASK);
 
-	asid = get_field(read_csr(satp), SATP_ASID_MASK);
+	asid = (read_csr(satp) & SATP_ASID_MASK) >> SATP_ASID_OFFSET;
 
 	while(asid & 0x1){
 		i++;
