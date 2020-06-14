@@ -79,6 +79,7 @@ SECTIONS
         _rodata = .;
         *(.rodata)
         *(.rodata.*)
+        . = ALIGN(4);
         _erodata = .;
     } > flash
 
@@ -90,7 +91,7 @@ SECTIONS
         _gp = .;
         *(.sdata)
         *(.sdata.*)
-        . = ALIGN(16); 
+        . = ALIGN(4); 
     } > ram
 
     _edata = .;
