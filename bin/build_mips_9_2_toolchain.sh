@@ -14,14 +14,14 @@
 # Use this script if you want do compile the hypervisor with GCC 9.2.0 for MIPS.
 #
 
-sudo apt flex bison libgmp3-dev libmpfr-dev autoconf texinfo build-essential libncurses5-dev
+sudo apt --assume-yes install flex bison libgmp3-dev libmpfr-dev autoconf texinfo build-essential libncurses5-dev libz-dev
 
 binutils_base="binutils-2.34"
 gcc_base="gcc-9.2.0"
 newlib_base="newlib-3.1.0"
 gdb_base="gdb-8.2.1"
 
-root_dir="~/Downloads/"
+root_dir="$HOME/Downloads"
 
 TARGET=mips-elf
 PREFIX=${root_dir}/$TARGET/${gcc_base}
@@ -35,10 +35,10 @@ src_dir="${root_dir}/source"
 bld_dir="${root_dir}/build"
 install_dir="${root_dir}/install"
 
-mkdir ${src_dir}
-mkdir ${bld_dir}
-mkdir ${install_dir}
-mkdir ${dl_dir}
+mkdir -p ${src_dir}
+mkdir -p ${bld_dir}
+mkdir -p ${install_dir}
+mkdir -p ${dl_dir}
 
 # download all sources
 cd $dl_dir
@@ -116,6 +116,11 @@ make -j2 all
 make install
 
 sudo mv ${root_dir}/$TARGET /opt
+
+rm -rf ${src_dir}
+rm -rf ${bld_dir}
+rm -rf ${install_dir}
+rm -rf ${dl_dir}
 
 echo  >> ~/.profile
 echo "export PATH=\"\$PATH:\"/opt/$TARGET/gcc-9.2.0/bin\"\"" >> ~/.profile
