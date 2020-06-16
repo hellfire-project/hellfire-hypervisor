@@ -11,13 +11,15 @@
 # a symbolic link in the mips-elf directory (gcc-9.2.0 -> gcc) to support multiple
 # versions of the toolchain.
 #
+# Use this script if you want do compile the hypervisor with GCC 9.2.0 for MIPS.
+#
 
 binutils_base="binutils-2.34"
 gcc_base="gcc-9.2.0"
 newlib_base="newlib-3.1.0"
 gdb_base="gdb-8.2.1"
 
-root_dir=`pwd`
+root_dir="~/Downloads/"
 
 TARGET=mips-elf
 PREFIX=${root_dir}/$TARGET/${gcc_base}
@@ -110,3 +112,16 @@ ${src_dir}/${gdb_base}/configure --prefix=$PREFIX --target=$TARGET \
  --enable-interwork --enable-multilib
 make -j2 all
 make install
+
+sudo mv ${root_dir}/$TARGET /opt
+
+echo  >> ~/.profile
+echo "export PATH=\"\$PATH:\"/opt/$TARGET/gcc-9.2.0/bin\"\"" >> ~/.profile
+echo  >> ~/.profile
+
+echo "***********************************************************"
+echo "You need to logout to the changes on you PATH make effect. "
+echo "***********************************************************"
+
+
+
