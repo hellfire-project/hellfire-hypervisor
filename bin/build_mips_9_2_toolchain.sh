@@ -14,6 +14,8 @@
 # Use this script if you want do compile the hypervisor with GCC 9.2.0 for MIPS.
 #
 
+sudo apt flex bison libgmp3-dev libmpfr-dev autoconf texinfo build-essential libncurses5-dev
+
 binutils_base="binutils-2.34"
 gcc_base="gcc-9.2.0"
 newlib_base="newlib-3.1.0"
