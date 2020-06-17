@@ -14,8 +14,8 @@
 #This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCRS/Brazil.
 
 #Input CFG file for VMs configuration
-#CFG_FILE = cfg/sample-blink.cfg
-CFG_FILE = cfg/test.cfg
+CFG_FILE = cfg/sample-blink.cfg
+#CFG_FILE = cfg/test.cfg
 #CFG_FILE = cfg/sample-ping-pong.cfg
 
 # CROSS Compiler 
@@ -147,7 +147,7 @@ start:
 	$(HOME)/riscv-tools/qemu-4.2.0/riscv32-softmmu/qemu-system-riscv32 -M virt -nographic -bios firmware.bin -serial mon:stdio &
 
 debug:
-	$(HOME)/riscv-tools/qemu-4.2.0/riscv32-softmmu/qemu-system-riscv32 -M virt -nographic -bios firmware.bin -serial mon:stdio -s -S &
+	$(HOME)/riscv-tools/qemu-4.2.0/riscv32-softmmu/qemu-system-riscv32 -M virt -icount shift=auto -nographic -bios firmware.bin -serial mon:stdio -s -S &
 
 stop:
 	killall qemu-system-riscv32 riscv32-unknown-elf-gdb | true
