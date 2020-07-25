@@ -131,6 +131,15 @@ void hyper_init(){
 	if(LowLevelProcInit()){
 		CRITICAL("Low level processor initialization error.");
 	}
+
+	//uint32_t ini = read_instret();
+	//uint32_t end = read_instret();
+
+	uint32_t ini = read_csr(minstret);
+	uint32_t end = read_csr(minstret);
+
+	
+	printf("\nminstret %d\n", end - ini);
 	
 	/* Configure the HEAP space on the allocator */ 
 	init_mem();

@@ -26,34 +26,50 @@ This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCR
 
 volatile int32_t t2 = 0;
 
-void irq_timer(){
-	t2++;
-	NEXT_TIMER();
-}
 
 
-int main() {
+#define NEXECUTION 100000
+
+void measure_get_guestID(){
 	uint32_t ini, end, i;
 
-	interrupt_register(irq_timer, GUEST_TIMER_INT);
-	
-	START_TIMER();
-	
-	NEXT_TIMER();
-	
-	ENABLE_LED1;
+	ini = get_performed_inst();
 
-  
-	while (1){
-		printf("\r\nBlink LED! Total of %d timer ticks.", t2); 
-       
-		/* Blink Led */
-		TOGGLE_LED1;
-		
-		/* 1 second delay */
-		mdelay(1000);
+	for(i=0;i<NEXECUTION;i++){
+		get_guestid();
 	}
-    
+
+	end = get_performed_inst();
+
+	printf("\nNumber of Instructions for get_guestid() %d", end - ini);
+
+}
+
+void measure_mdelay(){
+	uint32_t ini, end, i;
+
+	ini = get_performed_inst();
+
+	for(i=0;i<NEXECUTION;i++){
+		mdelay(0);
+	}
+
+	end = get_performed_inst();
+
+	printf("\nNumber of Instructions for mdelay() %d", end - ini);
+
+}
+
+int main() {
+	di();	
+
+
+	measure_get_guestID();
+
+	measure_mdelay();
+  
+  	while(1){}
+
 	return 0;
 }
 

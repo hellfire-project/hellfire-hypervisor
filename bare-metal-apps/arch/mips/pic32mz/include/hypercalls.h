@@ -196,3 +196,11 @@ asm volatile (                    \
  
 #endif
 
+/* Get own guest ID  */
+#define get_performed_inst() ({ int32_t __ret; \
+asm volatile (                    \
+"hypcall %1 \n\
+ move %0, $v0 " \
+ : "=r" (__ret) : "I" (HCALL_PERFORMED_INST) : "a0", "v0"); \
+ __ret; })
+ 

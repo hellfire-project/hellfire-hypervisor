@@ -76,6 +76,7 @@ static void print_config(void)
  * 
   */
 void hyper_init(){
+	uint32_t i = 0;
 	
 	/* Specific board configuration. */
 	early_platform_init();    
@@ -88,6 +89,14 @@ void hyper_init(){
 		CRITICAL("Low level processor initialization error.");
 	}
 	
+	mtc0(25, 1, 0);
+
+	mtc0(25, 0, (3<<23) | 0x2f);
+	uint32_t ini = mfc0(25, 1);
+	i++;
+	uint32_t end = mfc0(25, 1);
+	printf("\ncount %d %d", end - ini, i);
+
 	/* Configure the HEAP space on the allocator */ 
 	init_mem();
 	

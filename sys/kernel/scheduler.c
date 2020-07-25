@@ -33,7 +33,8 @@ This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCR
 #include <libc.h>
 #include <board.h>
 
-#define TICKS_BEFORE_SCHEDULING ( QUANTUM_SCHEDULER_MS / (SYSTEM_TICK_US/1000))
+//#define TICKS_BEFORE_SCHEDULING ( QUANTUM_SCHEDULER_MS / (SYSTEM_TICK_US/1000))
+#define TICKS_BEFORE_SCHEDULING 1
 
 struct scheduler_info_t scheduler_info = {NULL, NULL, NULL};
 

@@ -20,7 +20,6 @@ fsw \a, ((\b)*REGBYTES)(a0)
 
     .align 2
 trap_vector:
-    
     csrw    mscratch, sp
     la      sp, _stack          # set hypervisor stack
     addi    sp, sp, -128

@@ -61,8 +61,13 @@ void calc_next_timer_interrupt(uint32_t interval){
  * Perfoms VCPUs scheduling and virtual timer interrupt injection on guests. 
  */
 static void timer_interrupt_handler(){
+	uint32_t ini = mfc0(25, 1);
+	void * vc = vcpu_in_execution;
 	static uint32_t past = 0;
 	uint32_t now, diff_time;
+	static uint32_t exec_count = 0;
+	static uint32_t instruction_count = 0;
+
 	
 	calc_next_timer_interrupt(SYSTEM_TICK_INTERVAL);
 	
@@ -79,6 +84,17 @@ static void timer_interrupt_handler(){
 		setGuestCTL2(getGuestCTL2() | (GUEST_TIMER_INT << GUESTCLT2_GRIPL_SHIFT));
 		past = now;
 	}
+
+	if(vc != vcpu_in_execution){
+		exec_count++;
+		instruction_count += mfc0(25, 1) - ini + 5;
+		if(exec_count == 100000){
+			printf("\ninstruction_count %d", instruction_count);
+			exec_count = 0;
+			instruction_count = 0;
+		}
+	}
+
     
 }
 

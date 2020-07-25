@@ -128,6 +128,13 @@ asm volatile (                    \
  : "=r" (__ret) : "I" (HCALL_GET_MTIMER_VALUE) : "a0", "a7"); \
  __ret; })
 
+#define get_performed_inst() ({ int32_t __ret; \
+asm volatile (                    \
+"li a7, %1 \n\
+ ecall \n\
+ move %0, a0 " \
+ : "=r" (__ret) : "I" (HCALL_PERFORMED_INST) : "a0", "a7"); \
+ __ret; })
 
 #endif
 

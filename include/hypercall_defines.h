@@ -171,5 +171,11 @@ typedef void hypercall_t();
  */
 #define HCALL_GET_MTIMER_VALUE 21
 
+
+/* GET MTIMER VALUE 
+ * v0 = identification number.
+ */
+#define HCALL_PERFORMED_INST 22
+
 #endif
 

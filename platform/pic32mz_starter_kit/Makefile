@@ -14,18 +14,24 @@
 #This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCRS/Brazil.
 
 #Input CFG file for VMs configuration
-CFG_FILE = cfg/sample-blink.cfg
+#CFG_FILE = cfg/sample-blink.cfg
+#CFG_FILE = cfg/sample-ping-pong.cfg
 #CFG_FILE = cfg/sample-3VMs.cfg
+CFG_FILE = cfg/perfinstr1.cfg
 
 # CROSS Compiler 
+
+#For GCC 4.1
 #CROSS_COMPILER = mips-mti-elf-
+
+#For GCC 9.2.0. Please install the toolchain using the build_mips_9_2_toolchain.sh
 CROSS_COMPILER = mips-elf-
 
 # Optional Device Drivers
 CONFIG_INTERVMCOMM_DRV = yes
 #CONFIG_PIC32MZ_USB_DRV = yes
 #CONFIG_PIC32MZ_ETHERNET_DRV = yes
-CONFIG_VIRTUAL_IO_DRV = yes
+#CONFIG_VIRTUAL_IO_DRV = yes
 #CONFIG_INTERRUPT_REDIRECT_DRV = yes
 #CONFIG_PIC32MZ_DENIED_HYPERCALLS_DRV = yes
 #CONFIG_PIC32MZ_PUF_SRAM_DRV = yes
@@ -47,7 +53,7 @@ CFLAGS += -DCPU_ARCH="Microchip Starter Kit"
 CFLAGS += -DCPU_FREQ=200000000
 
 # Define DEBUG_GUEST to yes if you desire to compile the guests for debug. The code optimization will be O0.
-DEBUG_GUEST = yes
+DEBUG_GUEST = no
 
 
 ########################################################################################################
@@ -71,7 +77,7 @@ VERSION:=$(shell $(TOPDIR)/scripts/genversion.sh)
 LINKER_SCRIPT = ../../arch/mips/pic32mz/pic32mz.ld
 
 ### GCC flags configuration: processor tunning ###
-CFLAGS += -EL -O0 -mips32r5 -Wall
+CFLAGS += -EL -O3 -mips32r5 -Wall
 #MIPZ VZ support
 CFLAGS += -Wa,-mvirt 
 #flointing pointing options

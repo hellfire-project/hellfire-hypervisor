@@ -76,7 +76,13 @@ void guest_exit_exception(uint32_64_t cause, uint32_64_t mepc){
  * 
  */
 void general_exception_handler(uint32_64_t mcause, uint32_64_t mepc){
+	uint32_t ini = read_csr(minstret);
+
 	uint32_t cause = read_csr(mcause) & MCAUSE_MASK;
+	void * vc = vcpu_in_execution;
+	static uint32_t exec_count = 0;
+	static uint32_t instruction_count = 0;
+	
 
 	/* Interruption */
 	if(MCAUSE_INT & mcause){
@@ -89,5 +95,15 @@ void general_exception_handler(uint32_64_t mcause, uint32_64_t mepc){
 		}
 	}else{ /* Exceptions */ 
 		guest_exit_exception(cause, mepc);
+	}
+
+	if(vc != vcpu_in_execution){
+		exec_count++;
+		instruction_count += read_csr(minstret) - ini + 72;
+		if(exec_count == 100000){
+			printf("\ninstruction_count %d", instruction_count);
+			exec_count = 0;
+			instruction_count = 0;
+		}
 	}
 }

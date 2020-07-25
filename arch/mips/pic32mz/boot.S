@@ -148,7 +148,7 @@ $COPY_DATA:
 $L1:
     beq $zero, $zero, $L1
     nop
-    .set micromips
+    .set nomicromips
 
     #pic32mz doesn't need to save/restore registers. 
     #guests using gpr shadows. 

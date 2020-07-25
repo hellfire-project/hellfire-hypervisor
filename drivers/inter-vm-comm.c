@@ -64,6 +64,18 @@ void get_vm_id(){
 
 }
 
+
+get_performed_inst(){
+#if defined(RISCV64) || defined(RISCV32)	
+	MoveToPreviousGuestGPR(RETURN_REG, read_csr(minstret));
+#else
+	uint32_t v = mfc0(25, 1);
+	MoveToPreviousGuestGPR(RETURN_REG, v);
+#endif
+}
+
+
+
 /**
  * @brief Checks if a given VM is running.
  * V0 guest register will be replaced with 1 if the VM is running or MESSAGE_VCPU_NOT_INIT otherwise. MESSAGE_VCPU_NOT_FOUND 
@@ -211,7 +223,12 @@ void intervm_init(){
 		ERROR("Error registering the HCALL_IPC_RECV_MSG hypercall");
 		return;
 	}
-    
+
+	if(register_hypercall(get_performed_inst, HCALL_PERFORMED_INST) < 0){
+		ERROR("Error registering the HCALL_PERFORMED_INST hypercall");
+		return;
+	}
+
 	INFO("Inter-VM communication hypercalls registered.");
 }
 

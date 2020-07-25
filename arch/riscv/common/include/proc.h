@@ -35,6 +35,10 @@
   __tmp; })
 
 
+#define read_instret() ({ unsigned long __tmp; \
+  asm volatile ("rdinstret %0" : "=r"(__tmp)); __tmp; })
+
+
 #define __riscv_xlen 64
 
 #define CSR_FFLAGS      1
