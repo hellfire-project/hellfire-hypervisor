@@ -14,9 +14,10 @@
 #This code was written by Carlos Moratelli at Embedded System Group (GSE) at PUCRS/Brazil.
 
 #Input CFG file for VMs configuration
-CFG_FILE = cfg/sample-blink.cfg
-#CFG_FILE = cfg/test.cfg
+#CFG_FILE = cfg/perfinstr1.cfg
 #CFG_FILE = cfg/sample-ping-pong.cfg
+#CFG_FILE = cfg/test.cfg
+CFG_FILE = cfg/sample-blink.cfg
 
 # CROSS Compiler 
 CROSS_COMPILER = riscv32-unknown-elf-
@@ -71,7 +72,7 @@ VERSION:=$(shell $(TOPDIR)/scripts/genversion.sh)
 LINKER_SCRIPT = ../../arch/riscv/qemu-virt32/qemu-virt32.ld
 
 ### GCC flags configuration: processor tunning ###
-CFLAGS += -march=rv32imac -mabi=ilp32 -Wall -fpie -ffunction-sections -fdata-sections -DRISCV32
+CFLAGS += -O3 -march=rv32imac -mabi=ilp32 -Wall -fpie -ffunction-sections -fdata-sections -DRISCV32
 #MIPZ VZ support
 CFLAGS += -Wno-duplicate-decl-specifier -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast#-Wa, 
 #flointing pointing options
@@ -147,7 +148,7 @@ start:
 	$(HOME)/riscv-tools/qemu-4.2.0/riscv32-softmmu/qemu-system-riscv32 -M virt -nographic -bios firmware.bin -serial mon:stdio &
 
 debug:
-	$(HOME)/riscv-tools/qemu-4.2.0/riscv32-softmmu/qemu-system-riscv32 -M virt -icount shift=auto -nographic -bios firmware.bin -serial mon:stdio -s -S &
+	$(HOME)/riscv-tools/qemu-4.2.0/riscv32-softmmu/qemu-system-riscv32 -M virt -icount shift=0 -nographic -bios firmware.bin -serial mon:stdio -s -S &
 
 stop:
 	killall qemu-system-riscv32 riscv32-unknown-elf-gdb | true

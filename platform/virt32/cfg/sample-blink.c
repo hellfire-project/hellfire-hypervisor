@@ -36,17 +36,10 @@ system = {
 /* Virtual Machines Configuration */
 virtual_machines = (
     { 
-        app_name = "perfinstr1";
-        os_type = "BARE_METAL";
-        priority = 100;
-        RAM_size_bytes = "MEM_SIZE_32KB";
-    },
-    { 
         app_name = "blink";
         os_type = "BARE_METAL";
         priority = 100;
         RAM_size_bytes = "MEM_SIZE_32KB";
     }
-
 );
 
