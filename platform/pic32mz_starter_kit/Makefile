@@ -15,7 +15,9 @@
 
 #Input CFG file for VMs configuration
 #CFG_FILE = cfg/sample-blink.cfg
-CFG_FILE = cfg/sample-ping-pong.cfg
+#CFG_FILE = cfg/sample-ping-pong.cfg
+#CFG_FILE = cfg/coremark.cfg
+CFG_FILE = cfg/sample-3VMs.cfg
 
 # CROSS Compiler 
 CROSS_COMPILER = mips-mti-elf-
@@ -35,7 +37,7 @@ CONFIG_INTERRUPT_REDIRECT_DRV = yes
 
 # The following drivers is only for tests/performance purpose. 
 #CONFIG_TIMER_TEST_DRV = yes
-#CONFIG_PERFORMANCE_COUNTER_DRV = yes
+CONFIG_PERFORMANCE_COUNTER_DRV = yes
 #CONFIG_INTERRUPT_LATENCY_TEST_DRV = yes
 
 # Platform info
@@ -68,7 +70,7 @@ VERSION:=$(shell $(TOPDIR)/scripts/genversion.sh)
 LINKER_SCRIPT = ../../arch/mips/pic32mz/pic32mz.ld
 
 ### GCC flags configuration: processor tunning ###
-CFLAGS += -EL -O2 -mips32r5 -mmicromips -Wall
+CFLAGS += -EL -Os -mips32r5 -mmicromips -Wall
 #MIPZ VZ support
 CFLAGS += -Wa,-mvirt 
 #flointing pointing options
@@ -101,6 +103,7 @@ SIZE = $(CROSS_COMPILER)size
 CC= $(CROSS_COMPILER)gcc
 STRIP = $(CROSS_COMPILER)strip
 
+
 APP = prplHypervisor
 
 all: config_vms lib kernel common pic32mz platform drivers $(APP) bare_apps generate_firmware
@@ -119,7 +122,7 @@ $(APP):
 	$(OBJDUMP) -s $(APP).elf > $(APP).cnt
 	$(OBJCOPY) -O binary $(APP).elf $(APP).bin
 	$(OBJCOPY) -O ihex --change-addresses=0x80000000 $(APP).elf $(BIN).hex
-	$(SIZE) $(APP).elf
+	$(SIZE) -A $(APP).elf
 
 serial:
 	stty ${BAUDRATE} raw cs8 -hupcl -parenb -crtscts clocal cread ignpar ignbrk -ixon -ixoff -ixany -brkint -icrnl -imaxbel -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke -F ${SERIAL_DEV}

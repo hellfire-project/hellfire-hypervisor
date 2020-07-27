@@ -67,14 +67,14 @@ int main() {
 	
 	printf("\nPerforming the coremark, wait...");
 
-//	performance_counter_start(perf0.w, perf1.w);
+	//performance_counter_start(perf0.w, perf1.w);
 	
 	coremain();    
 	
-//	performance_counter_stop(perfcount);
+	//performance_counter_stop(perfcount);
 	
-//	printf("\nD-Cache Misses: %d", perfcount[0]);
-//	printf("\nI-Cache Misses: %d", perfcount[1]);
+	//printf("\nD-Cache Misses: %d", perfcount[0]);
+	//printf("\nI-Cache Misses: %d", perfcount[1]);
 
 	return 0;
 }
